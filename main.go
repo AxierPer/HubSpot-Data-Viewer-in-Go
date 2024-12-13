@@ -2,8 +2,6 @@ package main
 
 import (
 	rt "api_hubspot_go/src/routes"
-	"fmt"
-	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
@@ -14,13 +12,11 @@ type Data struct {
 
 func main() {
 	r := gin.Default()
-	r.LoadHTMLGlob("./static/templates/*")
-	r.Static("/static/", "./static/styles/")
 
 	r.GET("/", func(c *gin.Context) {
 		response := rt.GetClients()
-		c.HTML(http.StatusOK, "general.html", gin.H{
-			"Items": response,
+		c.JSON(200, gin.H{
+			"data": response,
 		})
 	})
 
@@ -32,9 +28,7 @@ func main() {
 		}
 
 		response := rt.GetClientId(data.ID)
-		fmt.Printf("\n tipo: %T \n", response)
-		c.HTML(http.StatusOK, "getId.html", gin.H{
-			"title":    "Main",
+		c.JSON(200, gin.H{
 			"name":     response["firstname"],
 			"lastname": response["lastname"],
 			"id":       response["hs_object_id"],

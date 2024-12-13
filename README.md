@@ -1,54 +1,56 @@
-# HubSpot Data Viewer in Go
+# HubSpot API Integration in Go
 
-This project is a Go-based application that retrieves and displays data from HubSpot, rendering it through HTML templates. It leverages the Gin framework for routing and serving pages, and integrates with the HubSpot API to fetch and present dynamic data.
+This project is a simple Go-based API that integrates with HubSpot to fetch and expose its data. Using the Gin framework, it provides a lightweight and RESTful interface for consuming HubSpot services and delivering JSON-based responses.
 
 ## Features
 
-- **Go + Gin**: Uses the lightweight and efficient Gin framework for HTTP handling.
-- **HTML Templates**: Employs Go's templating engine to load and render HTML templates dynamically.
-- **Data from HubSpot**: Fetches data from the HubSpot API and displays it in user-friendly HTML views.
-- **Modular Structure**: Organized file structure, with separate directories for configuration, routing, and static assets.
-- **Static Assets**: CSS styles are separated into the `static/styles` directory, and templates reside in `static/templates`.
+- **HubSpot API Integration**: Connects to HubSpot to fetch data such as contacts, deals, or custom objects.
+- **Go + Gin**: Uses the Gin framework for efficient routing and handling of HTTP requests.
+- **JSON-based Responses**: The API exclusively returns JSON data, ideal for integration with other applications or frontend frameworks.
+- **Environment Variables**: Securely manages sensitive information like HubSpot tokens using environment variables.
 
 ## Project Structure
-```plaintext
-api_hubspot_go/ 
-├─ src/ 
-│ ├─ config/ 
-│ │ └─ config.go 
-│ └─ routes/ 
-│ └─ routes.go 
-├─ static/ 
-│ ├─ styles/ │ 
-│ ├─ general.css 
-│ │ └─ getId.css 
-│ └─ templates/ 
-│ ├─ general.html 
-│ └─ getId.html 
-├─ .env 
-├─ .gitignore 
-├─ README.md 
-├─ go.mod 
-├─ go.sum 
-└─ main.go
-```
+  ```plaintext
+  api_hubspot_go/ 
+  ├─ src/ 
+  │ ├─ config/ 
+  │ │ └─ config.go 
+  │ └─ routes/ 
+  │ └─ routes.go 
+  ├─ .env 
+  ├─ .gitignore 
+  ├─ README.md 
+  ├─ go.mod 
+  ├─ go.sum 
+  └─ main.go
+  ```
 
-- **`src/config`**: Configuration logic (e.g., loading environment variables, setting up credentials).
-- **`src/routes`**: Defines routes and handlers that map URLs to specific logic and templates.
-- **`static/styles`**: Contains CSS files for styling the rendered pages.
-- **`static/templates`**: Houses HTML templates that present data to the user.
-- **`main.go`**: The main entry point of the application, initializing the server and loading routes.
+- **`src/config`**: Handles configuration, including loading environment variables (e.g., HubSpot API tokens).
+- **`src/routes`**: Contains API routes that interact with HubSpot's endpoints and return JSON responses.
+- **`main.go`**: Initializes the Gin server and sets up routing for the API.
+
+## Prerequisites
+
+1. **HubSpot Account**: You must have a HubSpot account and an API key or access token to use their services.
+2. **Go Environment**: Ensure that Go is installed on your system.
 
 ## Getting Started
 
 1. **Install dependencies**:
+   
    ```bash
    go mod tidy
    ```
 
 2. **Set environment variables**:
 
-- Edit the .env file to include your HubSpot token and other necessary environment variables.
+- Create a .env file in the root of your project with the following content:
+    
+    ```makefile
+    TOKEN_HUBSPOT=your_hubspot_api_toke
+    ```
+
+- Replace your_hubspot_api_token with your HubSpot API token.
 
 3. **Run the application**:
 
@@ -56,18 +58,37 @@ api_hubspot_go/
     go run main.go
     ```
 
-4. Access the application:
+4. **Access the application**:
 
 - Open your browser and navigate to:
 `http://localhost:8080`
 
-## Customization
+5. **Test the API**:
 
-- Modify `config.go` to adjust how environment variables are loaded.
-- Update `routes.go` to create or alter endpoints according to your data fetching needs.
-- Edit HTML templates in `static/templates/` to change the page layout or data presentation.
-- Adjust CSS in `static/styles/` to achieve the desired look and feel.
+- Use tools like curl, Postman, or any HTTP client to send requests to the API.
+- Example endpoint:
+
+  ```bash
+  GET http://localhost:8080/contacts
+  ```
+  This might fetch a list of contacts from your HubSpot account.
+
+## Example Endpoints
+
+- **GET /contacts**: Retrieves a list of contacts from HubSpot.
+- **GET /contacts/**:id: Fetches details for a specific contact by ID.
+- **POST /custom-object**: Adds a custom object to HubSpot (example functionality).
+Endpoints can be customized in `routes/routes.go`.
+
+## Customization
+- Add or modify routes in `routes.go` to extend the API functionality.
+- Use `config.go` to manage additional environment variables or configuration settings.
+- Extend the API to consume other HubSpot endpoints like Deals, Companies, or Pipelines.
 
 ## Additional Notes
-- This project is intended as a starting point for integrating Go, Gin, and HubSpot data into a basic web interface.
-- Further enhancements can include adding authentication, pagination, error handling, and improved UI/UX.
+- This API acts as a middleware to interact with HubSpot services, abstracting the complexity of their API.
+- Designed for scalability, you can build additional microservices or frontend applications on top of this API.
+
+# License
+This project is open source and available under the MIT License.
+
