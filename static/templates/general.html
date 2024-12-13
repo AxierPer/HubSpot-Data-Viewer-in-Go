@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Consumo API Hubspot</title>
+    <link  rel="stylesheet" href="static/general.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>{{ .Title }}</h1>
+      <div class="table-responsive">
+        <table>
+          <thead>
+            <tr>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Last Name</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {{ range .Items }}
+              <tr>
+                <td>{{ .hs_object_id }}</td>
+                <td>{{ .firstname }}</td>
+                <td>{{ .lastname }}</td>
+                <td>{{ .email }}</td>
+              </tr>
+            {{ end }}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>
