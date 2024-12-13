@@ -8,6 +8,7 @@ import (
 	"net/http"
 
 	cf "api_hubspot_go/src/config"
+	ty "api_hubspot_go/src/types"
 )
 
 func GetClients() (response []map[string]interface{}) {
@@ -87,4 +88,19 @@ func GetClientId(id string) (response map[string]interface{}) {
 	fmt.Println("Propiedades:", properties)
 
 	return properties
+}
+
+func InsertClient() {
+	url := "https://api.hubapi.com/crm/v3/objects/contacts"
+	req, _ := http.NewRequest("POST", url, nil)
+
+	token := cf.LoadConfig()
+	bearer := fmt.Sprintf("Bearer %s", token)
+	req.Header.Add("Authorization", bearer)
+
+	contact := ty.Contact{
+		AdditionalProp1: "string",
+		AdditionalProp2: "string",
+		AdditionalProp3: "string",
+	}
 }
